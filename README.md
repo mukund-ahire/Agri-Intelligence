@@ -1,434 +1,270 @@
-# Build with AI: Code for Communities 🇮🇳
+# Agri-Intelligence
 
-> **Google Cloud Hackathon --- Solving for India**
+> AI-powered crop advisory system for Indian farmers — Google Cloud "Build with AI: Code for Communities" Hackathon
 
-This repository contains a working prototype for the **Build with AI:
-Code for Communities** hackathon.
+---
 
-The hackathon focuses on building AI-powered solutions for challenges
-faced by Indian cities, states, and communities. Solutions must be
-designed for Indian-scale deployment and demonstrate real, working
-functionality rather than a concept-only presentation.
+## Problem
 
-## Hackathon Requirements
+Indian farmers often face crop disease and stress without access to timely, expert agricultural guidance. Consulting agronomists is expensive and slow. Many smallholder farmers lack access to reliable diagnostic tools in their local language or region.
 
-Our implementation must satisfy the following requirements:
+## Solution
 
--   Build a **working end-to-end prototype** for the selected problem
-    statement.
--   Integrate **Google AI** in a meaningful way.
--   Use **realistic or real data**, including public datasets, sample
-    data, or APIs where live data is unavailable.
--   Design the architecture for **scalability across Indian states and
-    communities**, rather than for a single-city proof of concept.
--   Provide **multilingual and/or voice support** where relevant to the
-    selected track.
--   Keep the solution deployable and demonstrate how it can operate
-    beyond the prototype stage.
--   Build the project during the hackathon period.
--   Use only original code or properly licensed open-source components.
+Agri-Intelligence is a mobile-first web application that allows a farmer to:
 
-## Problem Statements
+1. Share their GPS location (or enter coordinates manually)
+2. Select their crop
+3. Upload or photograph a crop image from their phone
+4. Receive an instant, structured AI-powered advisory
 
-The hackathon provides five tracks:
+The advisory is grounded in real-time weather data and curated agronomy context — not generic advice.
 
-### 1. AI for Digital Public Infrastructure & Governance
+## Target Users
 
-**Theme:** Innovation
+- Smallholder farmers across India
+- Agricultural extension workers
+- Farmer producer organisations (FPOs)
 
-Build a scalable, multilingual AI platform that aggregates citizen
-development requests through voice, text, and messaging applications
-across India's linguistic regions.
+---
 
-The system should combine citizen feedback with national demographic
-data, infrastructure indices, and public investment plans to identify
-demand hotspots and recommend high-priority development projects.
+## User Workflow
 
-### 2. Clean Air & Climate Resilience
-
-**Theme:** Sustainability
-
-Build an AI-powered federated climate-action platform combining
-citizen-sourced information, local sensor readings, satellite imagery,
-and meteorological data.
-
-The system should detect pollution hotspots, forecast air-quality
-spikes, and help relevant authorities coordinate rapid intervention.
-
-### 3. Smart Health & Supply Chain Resilience
-
-**Theme:** Resilience
-
-Build a federated AI platform for health-resource and supply-chain
-management across India's Primary Health Centre network.
-
-The system should provide visibility into medicine stocks, bed
-availability, and medical personnel, forecast demand, detect potential
-stock-outs, and support cross-district resource redistribution.
-
-### 4. Agricultural Intelligence
-
-**Theme:** Cooperation
-
-Build an interoperable digital agriculture network providing localized
-AI-powered agro-advisories.
-
-Potential capabilities include:
-
--   Crop recommendations
--   Satellite-based analysis
--   Soil-health analysis
--   Weather-based recommendations
--   Crop-disease diagnostics
--   Cross-state agricultural data/model sharing
-
-### 5. Track-Based Cyclone Impact & Infrastructure Vulnerability Forecaster
-
-**Theme:** Resilience
-
-Build an AI-powered predictive risk and vulnerability platform using:
-
--   Google Earth Engine satellite feeds
--   Real-time meteorological data
--   Geospatial information
--   Gemini multimodal reasoning
-
-The system should model cyclone-related hazards, identify infrastructure
-exposure, forecast damage pathways, and support early-warning
-advisories.
-
-## Mandatory Google AI Integration
-
-The solution must integrate at least one supported Google AI capability.
-
-Potential technologies include:
-
-  -----------------------------------------------------------------------
-  Capability                          Google technology
-  ----------------------------------- -----------------------------------
-  Generative AI / Agents              Gemini API, Google AI Studio,
-                                      Vertex AI
-
-  Predictive Modelling                Vertex AI, AutoML, custom
-                                      training/model serving
-
-  Vision / Multimodal                 Gemini multimodal, Vertex AI Vision
-
-  Language / Voice                    Cloud Speech-to-Text,
-                                      Text-to-Speech, Translation API,
-                                      Dialogflow
-
-  Geospatial                          Google Maps Platform, Google Earth
-                                      Engine
-
-  Data / Backend                      BigQuery, Firebase, Cloud Run,
-                                      Cloud Functions
-  -----------------------------------------------------------------------
-
-Google AI should be part of the actual product workflow, not merely
-mentioned in the documentation.
-
-## Suggested Architecture
-
-``` text
-                         ┌─────────────────────────┐
-                         │       User / Citizen     │
-                         │ Web • Mobile • Voice     │
-                         └────────────┬────────────┘
-                                      │
-                                      ▼
-                         ┌─────────────────────────┐
-                         │      Frontend / UI       │
-                         └────────────┬────────────┘
-                                      │
-                                      ▼
-                         ┌─────────────────────────┐
-                         │      Backend / API       │
-                         │   Auth • Data • Logic    │
-                         └────────────┬────────────┘
-                                      │
-                    ┌─────────────────┼─────────────────┐
-                    ▼                 ▼                 ▼
-             ┌────────────┐   ┌──────────────┐   ┌──────────────┐
-             │ Google AI  │   │ Data Sources │   │ Geospatial   │
-             │ Gemini /   │   │ APIs / Open  │   │ GEE / Maps   │
-             │ Vertex AI  │   │ Data / DB    │   │              │
-             └─────┬──────┘   └──────┬───────┘   └──────┬───────┘
-                   │                  │                  │
-                   └──────────────────┼──────────────────┘
-                                      ▼
-                         ┌─────────────────────────┐
-                         │ Analytics / Predictions │
-                         │ Alerts / Recommendations│
-                         └────────────┬────────────┘
-                                      │
-                                      ▼
-                         ┌─────────────────────────┐
-                         │ Dashboard / Action      │
-                         │ Citizen • Admin • Govt  │
-                         └─────────────────────────┘
+```
+Farmer opens application
+        ↓
+Selects location (GPS or manual)
+        ↓
+Selects crop
+        ↓
+Uploads / photographs crop
+        ↓
+Clicks Analyze Crop
+        ↓
+Real Gemini AI multimodal inference
+        ↓
+Advisory displayed:
+  - Detected issue
+  - Confidence + Severity
+  - Observations
+  - Recommended Actions
+  - Prevention
+  - Weather context
+  - Limitations / disclaimer
 ```
 
-The final architecture should be adapted to the selected track. Do not
-implement unnecessary services merely to make the architecture look
-complex.
+---
 
-## Data Principles
+## Technology Stack
 
-Use data that is:
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js 16 (App Router), TypeScript, Tailwind CSS |
+| Backend API | Next.js API Routes (server-side only) |
+| AI | Google Gemini 3.5 Flash-Lite (multimodal) via `@google/genai` |
+| Weather | OpenWeather API (live data) |
+| Database | PostgreSQL (Supabase), Prisma v7 with `@prisma/adapter-pg` |
+| Deployment | Vercel-compatible |
 
-1.  **Real or realistic**
-2.  **Traceable to a known source**
-3.  **Appropriately licensed**
-4.  **Relevant to the selected problem**
-5.  **Documented in the repository**
+---
 
-For each external dataset or API, document:
+## Google AI Integration
 
--   Source
--   URL
--   Data format
--   Update frequency, if known
--   Geographic coverage
--   Important limitations
--   License/usage restrictions
+The application uses **Google Gemini 3.5 Flash-Lite** for real multimodal inference:
 
-Potential public-data sources mentioned by the hackathon include:
+- The crop image is sent to Gemini as base64 inline data
+- A structured prompt includes live weather context and curated agronomy context
+- Gemini returns a structured JSON advisory enforced by `responseSchema`
+- The response is validated server-side before being returned to the user
 
--   data.gov.in
--   Indian government open-data portals
--   FAO agricultural datasets
--   WHO health data
--   ISRO/Bhuvan satellite data
--   IMD and national meteorological services
+Gemini is **never called from the browser**. All AI calls are made server-side in `web/src/services/ai.ts`.
 
-Do not claim that a dataset is live, official, complete, or real-time
-unless that has been verified.
+---
 
-## Submission Package
+## Weather Integration
 
-The hackathon submission requires:
+Live weather data is fetched from the **OpenWeather API** (`/data/2.5/weather`) using the farmer's latitude and longitude.
 
-### 1. Source Code
+If `WEATHER_API_KEY` is not set, the service returns clearly labelled demo data and logs a warning. The service never silently fabricates weather measurements.
 
-A public or access-granted GitHub repository.
+---
 
-### 2. Demo Video
+## Agronomy Data
 
-A **3--5 minute** working end-to-end walkthrough.
+Curated agronomy context is returned from `web/src/services/agronomy.ts`.
 
-The video should demonstrate the actual product flow rather than only
-slides.
+This is demo/curated data modelled on public agricultural extension guidelines. It is **clearly labelled** as demo data and is NOT claimed to be official live government data.
 
-### 3. Pitch Deck
+---
 
-A **10--12 slide** presentation covering:
+## Architecture
 
--   Problem
--   Target users
--   Solution
--   Google AI approach
--   Data sources
--   Working prototype
--   Impact
--   Deployability
--   Scalability across India
--   Architecture
--   Future/pilot roadmap
-
-### 4. Brief Description
-
-A concise **2--3 line** description of the solution.
-
-### 5. Deployed Link
-
-A live, accessible deployment of the prototype.
-
-## Evaluation Criteria
-
-The submission is evaluated across five criteria:
-
-  Criterion                       Weight
-  ----------------------------- --------
-  Problem-Solution Fit               20%
-  AI / Technical Execution           25%
-  Depth & Reach Across India         20%
-  Impact Potential                   15%
-  Deployability & Scalability        20%
-
-### What the implementation should demonstrate
-
-**Problem-Solution Fit**
-
-The product should directly address the selected challenge.
-
-**AI / Technical Execution**
-
-The AI workflow should be functional end-to-end, with meaningful Google
-AI integration.
-
-**Depth & Reach**
-
-The architecture and data model should support expansion from a local
-prototype to multiple Indian cities, districts, or states.
-
-**Impact Potential**
-
-Clearly define who benefits, what improves, and how the benefit could
-scale.
-
-**Deployability & Scalability**
-
-Explain how the system could be piloted within an institution/ministry
-or expanded across states.
-
-## Repository Structure
-
-A recommended structure:
-
-``` text
-.
-├── README.md
-├── AGENTS.md
-├── docs/
-│   ├── architecture.md
-│   ├── data-sources.md
-│   └── api.md
-├── frontend/
-├── backend/
-├── ai/
-├── data/
-│   ├── sample/
-│   └── README.md
-├── tests/
-├── scripts/
-├── .env.example
-├── .gitignore
-└── LICENSE
+```
+Browser
+  └─ POST /api/advisory (multipart/form-data: image, lat, lng, crop)
+          ↓
+  Input Validation
+          ↓
+  Weather Service (OpenWeather API)
+          ↓
+  Agronomy Service (curated demo context)
+          ↓
+  AI Service (Google Gemini 3.5 Flash-Lite)
+          ↓
+  Response Validation
+          ↓
+  Prisma → PostgreSQL (AdvisorySession saved)
+          ↓
+  JSON response → Frontend → Advisory displayed
 ```
 
-Adjust this structure to the actual implementation. Do not create empty
-layers or folders solely for appearance.
+---
 
-## Local Development
-
-> Replace the commands below with the project's actual commands before
-> submission.
+## Setup Instructions
 
 ### Prerequisites
 
--   Git
--   Node.js / Python / Java / Flutter --- depending on the
-    implementation
--   Google Cloud project
--   Required Google AI API access
--   Required database/runtime services
+- Node.js 20+
+- PostgreSQL database (or Supabase)
+- Google AI API key (AI Studio)
+- OpenWeather API key
+
+### Installation
+
+```bash
+cd web
+npm install
+npx prisma generate
+```
 
 ### Environment Variables
 
-Never commit API keys, service-account credentials, passwords, or
-private tokens.
+Copy `.env.example` to `web/.env` and fill in:
 
-Use:
-
-``` text
-.env
+```env
+GOOGLE_AI_API_KEY=      # Google AI Studio API key
+WEATHER_API_KEY=         # OpenWeather API key
+DATABASE_URL=            # PostgreSQL connection string (pooled, for Prisma runtime)
+DIRECT_URL=              # PostgreSQL connection string (direct, for migrations)
 ```
 
-locally and provide:
+See `.env.example` at the root for the full template.
 
-``` text
-.env.example
+### Database
+
+```bash
+cd web
+npx prisma db push
 ```
 
-with variable names but no secrets.
+### Run (Development)
 
-Example:
-
-``` env
-GOOGLE_API_KEY=
-GOOGLE_CLOUD_PROJECT=
-GOOGLE_APPLICATION_CREDENTIALS=
-DATABASE_URL=
+```bash
+cd web
+npm run dev
 ```
 
-## Security
+Open http://localhost:3000
 
--   Never commit secrets.
--   Validate all user input.
--   Apply authentication and authorization where required.
--   Do not expose private user or citizen data unnecessarily.
--   Minimize collection of personally identifiable information.
--   Log failures without leaking sensitive information.
--   Use HTTPS for deployed services.
--   Follow the licensing requirements of every external dependency and
-    dataset.
+### Build (Production)
 
-## Development Principles
+```bash
+cd web
+npm run build
+npm start
+```
 
-1.  **Working functionality over mock UI.**
-2.  **Evidence over assumptions.**
-3.  **Simple architecture over unnecessary complexity.**
-4.  **Google AI must perform a real task in the product.**
-5.  **Every external data source must be documented.**
-6.  **No fabricated datasets, metrics, integrations, or claims.**
-7.  **Prototype locally, but design the architecture for Indian-scale
-    deployment.**
-8.  **Keep the demo path deterministic and easy to reproduce.**
+---
 
-## Hackathon Rules
+## API
 
--   Teams can have up to **4 members**.
--   Solo participation is allowed.
--   Registration is free.
--   The project must be built during the hackathon period.
--   Pre-existing projects are not eligible unless substantially extended
-    for the challenge.
--   Code must be original or based on properly licensed open-source
-    components.
--   The solution should have cross-border applicability in mind: built
-    for one context but architected so it can scale to other BRICS
-    nations.
--   Respectful and inclusive conduct is expected.
+### POST /api/advisory
 
-## Prototype Definition of Done
+**Content-Type:** `multipart/form-data`
 
-Before submission, verify:
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `image` | File (JPEG/PNG) | Yes | Crop photograph |
+| `lat` | string (float) | Yes | Latitude |
+| `lng` | string (float) | Yes | Longitude |
+| `crop` | string | Yes | Crop name |
 
--   [ ] Core user journey works end-to-end.
--   [ ] Google AI integration is functional.
--   [ ] Data source(s) are documented.
--   [ ] Error states are handled.
--   [ ] Demo can be reproduced.
--   [ ] Deployment works from a clean environment.
--   [ ] No secrets are committed.
--   [ ] README contains setup instructions.
--   [ ] Demo video is 3--5 minutes.
--   [ ] Pitch deck contains 10--12 slides.
--   [ ] Deployed URL is accessible.
--   [ ] Scalability beyond one city/state is explained.
--   [ ] Multilingual/voice functionality is implemented where required
-    by the selected track.
+**Response (200 OK):**
 
-## Project Status
+```json
+{
+  "success": true,
+  "advisory": {
+    "crop": "Wheat",
+    "possible_issue": "Wheat Leaf Rust",
+    "confidence": "High",
+    "severity": "High",
+    "observations": ["..."],
+    "recommended_actions": ["..."],
+    "prevention": ["..."],
+    "weather_considerations": ["..."],
+    "limitations": ["..."]
+  }
+}
+```
 
-> **This section should be updated as development progresses.**
+**Error responses:** `400` for invalid input, `500` for AI/service failures.
 
--   [ ] Problem statement selected
--   [ ] User personas defined
--   [ ] Architecture finalized
--   [ ] Data sources verified
--   [ ] Google AI integration completed
--   [ ] Core workflow implemented
--   [ ] Frontend completed
--   [ ] Backend completed
--   [ ] Testing completed
--   [ ] Deployment completed
--   [ ] Demo video recorded
--   [ ] Pitch deck completed
--   [ ] Final submission reviewed
+---
+
+## Database Schema
+
+| Model | Purpose |
+|---|---|
+| `Location` | Hierarchical geographic record (state → district → block → village, lat/lng) |
+| `Farmer` | Farmer record linked to a location |
+| `Crop` | Crop type |
+| `AdvisorySession` | Records each successful advisory with AI response and weather snapshot |
+
+---
+
+## Limitations
+
+- The Gemini advisory is based on visual analysis of a single image and cannot replace a field diagnosis by a qualified agronomist.
+- Agronomy context is curated demo data, not a live government dataset.
+- Farmer records are created anonymously (no authentication in the current MVP).
+- No multilingual support in the current version.
+- No offline mode.
+
+---
+
+## Current Implementation Status
+
+| Feature | Status |
+|---|---|
+| Crop image upload + preview | ✅ Implemented |
+| GPS geolocation | ✅ Implemented |
+| Manual coordinate entry | ✅ Implemented |
+| Crop selection | ✅ Implemented |
+| Live weather context | ✅ Implemented (OpenWeather) |
+| Agronomy context | ✅ Implemented (curated demo) |
+| Gemini multimodal AI advisory | ✅ Implemented + verified |
+| Structured response validation | ✅ Implemented |
+| PostgreSQL persistence | ✅ Implemented (Supabase) |
+| Mobile-first UI | ✅ Implemented |
+| Input validation + error handling | ✅ Implemented |
+| Accessibility (labels, aria, keyboard) | ✅ Implemented |
+| Authentication | ❌ Not implemented (MVP) |
+| Multilingual support | ❌ Not implemented |
+| Offline mode | ❌ Not implemented |
+| Deployment (production URL) | ⏳ Pending |
+
+---
+
+## Data Sources
+
+| Source | Usage | Type |
+|---|---|---|
+| OpenWeather API | Live weather by lat/lng | Live |
+| Agronomy context | Crop-specific guidelines | Curated demo |
+| Gemini visual analysis | Crop disease inference | AI inference |
+
+---
 
 ## License
 
-Add the project's chosen license here and verify that all third-party
-dependencies and datasets permit the intended use.
+MIT
