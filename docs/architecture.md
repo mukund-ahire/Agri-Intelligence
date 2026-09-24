@@ -50,6 +50,6 @@ The AI response must adhere to the following schema:
   "recommended_actions": ["string"],
   "prevention": ["string"],
   "weather_considerations": ["string"],
-  "limitations": "string (Disclaimer that this is an AI advisory and not a definitive diagnosis)"
+  "limitations": ["string (array of uncertainty/disclaimer statements)"]
 }
 ```

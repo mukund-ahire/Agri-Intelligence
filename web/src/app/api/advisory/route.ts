@@ -100,6 +100,6 @@ export async function POST(request: Request) {
     });
   } catch (error: unknown) {
     console.error("Advisory API Error:", error);
-    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
+    return NextResponse.json({ success: false, error: "Unable to generate advisory. Please try again later." }, { status: 500 });
   }
 }

@@ -125,8 +125,8 @@ Browser
 
 - Node.js 20+
 - PostgreSQL database (or Supabase)
-- Google AI API key (AI Studio)
-- OpenWeather API key
+- Google AI API key (Google AI Studio — required)
+- OpenWeather API key (optional — if absent, clearly-labelled demo weather data is used)
 
 ### Installation
 
@@ -141,10 +141,11 @@ npx prisma generate
 Copy `.env.example` to `web/.env` and fill in:
 
 ```env
-GOOGLE_AI_API_KEY=      # Google AI Studio API key
-WEATHER_API_KEY=         # OpenWeather API key
-DATABASE_URL=            # PostgreSQL connection string (pooled, for Prisma runtime)
-DIRECT_URL=              # PostgreSQL connection string (direct, for migrations)
+GOOGLE_AI_API_KEY=      # Required — Google AI Studio API key
+WEATHER_API_KEY=        # Optional — OpenWeather API key.
+                        # If omitted, the weather service returns clearly-labelled demo data.
+DATABASE_URL=           # Required — PostgreSQL pooled connection string (used at runtime by @prisma/adapter-pg)
+DIRECT_URL=             # Required — PostgreSQL direct connection string (used by Prisma CLI for db push / migrations)
 ```
 
 See `.env.example` at the root for the full template.
