@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Location {
+  id           String            @id @default(uuid())
+  state        String
+  district     String
+  block        String
+  villageFarm  String
+  lat          Float?
+  lng          Float?
+  farmers      Farmer[]
+  advisories   AdvisorySession[]
+}
+
+model Farmer {
+  id                String            @id @default(uuid())
+  name              String
+  preferredLanguage String            @default("en")
+  locationId        String
+  location          Location          @relation(fields: [locationId], references: [id])
+  advisories        AdvisorySession[]
+}
+
+model Crop {
+  id         String            @id @default(uuid())
+  name       String
+  variety    String?
+  advisories AdvisorySession[]
+}
+
+model AdvisorySession {
+  id               String   @id @default(uuid())
+  farmerId         String
+  cropId           String
+  locationId       String
+  uploadedImageUrl String
+  weatherSnapshot  Json?
+  aiResponse       Json?
+  createdAt        DateTime @default(now())
+
+  farmer   Farmer   @relation(fields: [farmerId], references: [id])
+  crop     Crop     @relation(fields: [cropId], references: [id])
+  location Location @relation(fields: [locationId], references: [id])
+}
